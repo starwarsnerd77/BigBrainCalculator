@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(data.type == CalcButtonData.ButtonType.CLEAR) {
                         mathView.clearMaths();
                     } else if(data.type == CalcButtonData.ButtonType.HISTORY) {
-                        showHistory();
+                        // showHistory();
                     } else if(data.type == CalcButtonData.ButtonType.EQUALS) {
                         addMaths(mathView.getMaths(), mainLayout);
                         mathView.setMaths(calc.evaluateMaths(mathView.getMaths()));
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(data.type == CalcButtonData.ButtonType.NEG) {
                         mathView.setMaths(calc.toNegative(mathView.getMaths()));
                     } else if(data.type == CalcButtonData.ButtonType.DEL) {
-                        mathView.delMaths();
+                        // mathView.delMaths();
                     }
                 }
             });
