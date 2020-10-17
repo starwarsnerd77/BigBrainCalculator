@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(data.type == CalcButtonData.ButtonType.NEG) {
                         mathView.setMaths(calc.toNegative(mathView.getMaths()));
                     } else if(data.type == CalcButtonData.ButtonType.DEL) {
-                        // mathView.delMaths();
+                        mathView.delMaths();
                     }
                 }
             });
