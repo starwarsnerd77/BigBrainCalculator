@@ -42,12 +42,17 @@ public class CalcMathDisplay extends AppCompatTextView {
                 }
             }
         };
-        newMaths.remove(newMaths.size() - 1);
-        maths = String.join(" ", newMaths);
-        if(newMaths.get(newMaths.size() - 1).equals("+") || newMaths.get(newMaths.size() - 1).equals("-") || newMaths.get(newMaths.size() - 1).equals("x") || newMaths.get(newMaths.size() - 1).equals("/")) {
-            maths += " ";
+        if(newMaths.size() <= 1) {
+            clearMaths();
+        } else {
+            newMaths.remove(newMaths.size() - 1);
+            maths = String.join(" ", newMaths);
+            if(newMaths.get(newMaths.size() - 1).equals("+") || newMaths.get(newMaths.size() - 1).equals("-") || newMaths.get(newMaths.size() - 1).equals("x") || newMaths.get(newMaths.size() - 1).equals("/")) {
+                maths += " ";
+            }
+            setMaths(maths);
         }
-        setMaths(maths);
+
     }
 
 
