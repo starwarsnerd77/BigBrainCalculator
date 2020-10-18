@@ -3,13 +3,11 @@ package com.example.bigbraincalculator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import java.util.ArrayList;
 
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(data.type == CalcButtonData.ButtonType.CLEAR) {
                         mathView.clearMaths();
                     } else if(data.type == CalcButtonData.ButtonType.HISTORY) {
-                        // showHistory();
+                        showHistory();
                     } else if(data.type == CalcButtonData.ButtonType.EQUALS) {
                         addMaths(mathView.getMaths(), mainLayout);
                         mathView.setMaths(calc.evaluateMaths(mathView.getMaths()));
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         }
         historyPage.addView(mathsHistory);
         setContentView(historyPage);
+
     }
 
     public ArrayList<CalcButtonData> createButtonsData() {
