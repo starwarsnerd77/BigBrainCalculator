@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 setContentView(mainLayout);
             }
         });
@@ -106,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout mathsHistory = new LinearLayout(this);
         mathsHistory.setOrientation(LinearLayout.VERTICAL);
         for(AppCompatButton oldies : oldMathsList) {
+            if(oldies.getParent() != null) {
+                ((ViewGroup)oldies.getParent()).removeView(oldies); // <- fix
+            }
             mathsHistory.addView(oldies);
         }
         historyPage.addView(mathsHistory);
