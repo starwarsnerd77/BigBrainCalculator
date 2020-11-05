@@ -3,22 +3,32 @@ package com.example.bigbraincalculator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    public ArrayList<AppCompatButton> oldMathsList = new ArrayList<>();
+    public ArrayList<String> oldMathsList = new ArrayList<>();
+    String oldMaths = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        oldMaths = intent.getStringExtra("oldMaths");
+        if(oldMaths == null) {
+            oldMaths = "";
+        }
         Calculator calc = new Calculator();
 
         createLayouts(calc);
@@ -42,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         CalcMathDisplay mathView = new CalcMathDisplay(this);
         mathView.setBackgroundColor(getResources().getColor(R.color.primaryLight, null));
         mathView.setId(R.id.mathDisplay);
+        mathView.setMaths(oldMaths);
         mainLayout.addView(mathView);
 
         createButtons(calc, mathView, calcButtonsLayout, mainLayout);
@@ -55,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
         AppCompatButton backButton = new AppCompatButton(this);
         backButton.setText("Back");
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(mainLayout);
-            }
-        });
-        oldMathsList.add(backButton);
+//        backButton.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                setContentView(mainLayout);
+////            }
+////        });
+////        oldMathsList.add(backButton);
         ArrayList<CalcButtonData> buttons = createButtonsData();
         for(final CalcButtonData data : buttons) {
             CalcButton button = new CalcButton(this, data, new View.OnClickListener() {
@@ -74,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(data.type == CalcButtonData.ButtonType.HISTORY) {
                         showHistory();
                     } else if(data.type == CalcButtonData.ButtonType.EQUALS) {
-                        addMaths(mathView.getMaths(), mainLayout);
+                        addMaths(mathView.getMaths(), mainLayout, mathView);
                         mathView.setMaths(calc.evaluateMaths(mathView.getMaths()));
                     } else if(data.type == CalcButtonData.ButtonType.FUNCS) {
                         // show funcs
@@ -89,30 +100,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void addMaths(final String oldies, final LinearLayout mainLayout) {
-        oldMathsList.add(new OldMaths(this, oldies, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CalcMathDisplay mathView = findViewById(R.id.mathDisplay);
-                mathView.setMaths(oldies);
-                setContentView(mainLayout);
-            }
-        }));
+    public void addMaths(final String oldies, final LinearLayout mainLayout, final CalcMathDisplay mathView) {
+        oldMathsList.add(oldies);
     }
 
     public void showHistory() {
-        ScrollView historyPage = new ScrollView(this);
-        LinearLayout mathsHistory = new LinearLayout(this);
-        mathsHistory.setOrientation(LinearLayout.VERTICAL);
-        for(AppCompatButton oldies : oldMathsList) {
-            if(oldies.getParent() != null) {
-                ((ViewGroup)oldies.getParent()).removeView(oldies); // <- fix
-            }
-            mathsHistory.addView(oldies);
-        }
-        historyPage.addView(mathsHistory);
-        setContentView(historyPage);
-
+        Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+        intent.putExtra("oldMathsList", oldMathsList);
+        startActivity(intent);
     }
 
     public ArrayList<CalcButtonData> createButtonsData() {
