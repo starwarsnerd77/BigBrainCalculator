@@ -66,13 +66,6 @@ public class MainActivity extends AppCompatActivity {
         AppCompatButton backButton = new AppCompatButton(this);
         backButton.setText("Back");
 
-//        backButton.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                setContentView(mainLayout);
-////            }
-////        });
-////        oldMathsList.add(backButton);
         ArrayList<CalcButtonData> buttons = createButtonsData();
         for(final CalcButtonData data : buttons) {
             CalcButton button = new CalcButton(this, data, new View.OnClickListener() {
@@ -93,11 +86,19 @@ public class MainActivity extends AppCompatActivity {
                         mathView.setMaths(calc.toNegative(mathView.getMaths()));
                     } else if(data.type == CalcButtonData.ButtonType.DEL) {
                         mathView.delMaths();
+                    } else if(data.type == CalcButtonData.ButtonType.GRAPHING) {
+                        showGraph(Float.parseFloat(calc.evaluateMaths(mathView.getMaths())));
                     }
                 }
             });
             calcButtonsLayout.addView(button);
         }
+    }
+
+    public void showGraph(Float maths) {
+        Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+        intent.putExtra("maths", maths);
+        startActivity(intent);
     }
 
     public void addMaths(final String oldies, final LinearLayout mainLayout, final CalcMathDisplay mathView) {
