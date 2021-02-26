@@ -1,6 +1,6 @@
 # BigBrainCalculator
 
-This is a Calculator Application for Android.
+This is a Calculator Application for Android to help students with math.
 
 ## Installation
 
@@ -21,4 +21,5 @@ Graphing calculator functionality.
 
 Fractions
 Variables
-Simple algebra functions
+Simple algebra functions and formulas.
+Hopefully calculus as well.
