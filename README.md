@@ -1,6 +1,6 @@
 # BigBrainCalculator
 
-This is a Calculator Application for Android to help students with math.
+This is a Calculator Application for Android to help students with their math classes.
 
 ## Installation
 
