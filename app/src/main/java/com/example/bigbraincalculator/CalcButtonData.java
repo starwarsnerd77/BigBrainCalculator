@@ -18,6 +18,7 @@ public class CalcButtonData {
         HISTORY,
         EQUALS,
         FUNCS,
+        NUMBERS,
         NEG,
         DEL,
         GRAPHING
