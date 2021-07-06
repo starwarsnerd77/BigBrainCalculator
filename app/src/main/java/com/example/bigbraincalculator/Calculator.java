@@ -17,37 +17,58 @@ public class Calculator {
         int end = postfix.size();
         while(i < end) {
             if(postfix.get(i).equals("+")) {
-                postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) + new Float(postfix.get(i-1))));
-                postfix.remove(i);
-                postfix.remove(i-1);
-                i -= 2;
+                if(isNumeric(postfix.get(i-2)) && isNumeric(postfix.get(i-1))) {
+                    postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) + new Float(postfix.get(i-1))));
+                    postfix.remove(i);
+                    postfix.remove(i-1);
+                    i -= 2;
+                }
             } else if(postfix.get(i).equals("-")) {
-                postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) - new Float(postfix.get(i-1))));
-                postfix.remove(i);
-                postfix.remove(i-1);
-                i -= 2;
-            } else if(postfix.get(i).equals("x")) {
-                postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) * new Float(postfix.get(i-1))));
-                postfix.remove(i);
-                postfix.remove(i-1);
-                i -=2;
+                if(isNumeric(postfix.get(i-2)) && isNumeric(postfix.get(i-1))) {
+                    postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) - new Float(postfix.get(i-1))));
+                    postfix.remove(i);
+                    postfix.remove(i-1);
+                    i -= 2;
+                }
+            } else if(postfix.get(i).equals("X")) {
+                if(isNumeric(postfix.get(i-2)) && isNumeric(postfix.get(i-1))) {
+                    postfix.set(i - 2, String.valueOf(new Float(postfix.get(i - 2)) * new Float(postfix.get(i - 1))));
+                    postfix.remove(i);
+                    postfix.remove(i - 1);
+                    i -= 2;
+                }
             } else if(postfix.get(i).equals("/")) {
-                postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) / new Float(postfix.get(i-1))));
-                postfix.remove(i);
-                postfix.remove(i-1);
-                i -= 2;
+                if(isNumeric(postfix.get(i-2)) && isNumeric(postfix.get(i-1))) {
+                    postfix.set(i-2, String.valueOf(new Float(postfix.get(i-2)) / new Float(postfix.get(i-1))));
+                    postfix.remove(i);
+                    postfix.remove(i-1);
+                    i -= 2;
+                }
             }
             i++;
             end = postfix.size();
         }
-        return postfix.get(0);
+        String result = fromPostfix(postfix);
+        return result;
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            float d = Float.parseFloat(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public ArrayList<String> toPostfix(String maths) {
         ArrayList<String> postfix = new ArrayList<>();
         ArrayList<String> ops = new ArrayList<>();
         for(String c : maths.split(" ")) {
-            if(!c.equals("+") && !c.equals("-") && !c.equals("x") && !c.equals("/")) {
+            if(!c.equals("+") && !c.equals("-") && !c.equals("X") && !c.equals("/")) {
                 postfix.add(c);
             } else if(c.equals("+") || c.equals("-")) {
                 if (ops.size() > 0) {
@@ -57,7 +78,7 @@ public class Calculator {
                     }
                 }
                 ops.add(c);
-            } else if(c.equals("x") || c.equals("/")) {
+            } else if(c.equals("X") || c.equals("/")) {
                 if (ops.size() > 0 && !ops.get(ops.size() - 1).equals("+") && !ops.get(ops.size() - 1).equals("-")) {
                     while (ops.get(ops.size() - 1).equals("*") || ops.get(ops.size() - 1).equals("/")) {
                         postfix.add(ops.get(ops.size() - 1));
@@ -74,6 +95,25 @@ public class Calculator {
         return postfix;
     }
 
+    public String fromPostfix(ArrayList<String> postfix) {
+        String result;
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < postfix.size(); i++) {
+            if(postfix.get(i).equals("+") || postfix.get(i).equals("-") || postfix.get(i).equals("X") || postfix.get(i).equals("/")) {
+                sb.append(postfix.get(i-2));
+                sb.append(postfix.get(i));
+                sb.append(postfix.get(i-1));
+            }
+//            else {
+//                sb.append(postfix.get(i));
+//                sb.append(" ");
+//            }
+
+        }
+        result = sb.toString();
+        return result;
+    }
+
     public String toNegative(final String maths) {
         String result = "-";
         ArrayList<String> mathsList = new ArrayList<String>() {
@@ -83,7 +123,7 @@ public class Calculator {
                 }
             }
         };
-        if(!mathsList.get(mathsList.size()-1).equals("+") && !mathsList.get(mathsList.size()-1).equals("-") && !mathsList.get(mathsList.size()-1).equals("x") && !mathsList.get(mathsList.size()-1).equals("/")) {
+        if(!mathsList.get(mathsList.size()-1).equals("+") && !mathsList.get(mathsList.size()-1).equals("-") && !mathsList.get(mathsList.size()-1).equals("X") && !mathsList.get(mathsList.size()-1).equals("/")) {
             result += mathsList.get(mathsList.size()-1);
         } else {
             result = mathsList.get(mathsList.size()-1);

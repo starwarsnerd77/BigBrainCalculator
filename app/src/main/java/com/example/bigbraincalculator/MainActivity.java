@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 add(new CalcButtonData(" % ", 3, 0, 1, pa));
                 add(new CalcButtonData("(", 3, 1, 1, pa));
                 add(new CalcButtonData(")", 3, 2, 1, pa));
-                add(new CalcButtonData(" x ", 3, 3, 1, pd));
+                add(new CalcButtonData(" X ", 3, 3, 1, pd));
                 add(new CalcButtonData("!", 4, 0, 1, pa));
                 add(new CalcButtonData("nCr", 4, 1, 1, pa));
                 add(new CalcButtonData("nPr", 4, 2, 1, CalcButtonData.ButtonType.NEG, pa));
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 add(new CalcButtonData("1", 3, 0, 1, pa));
                 add(new CalcButtonData("2", 3, 1, 1, pa));
                 add(new CalcButtonData("3", 3, 2, 1, pa));
-                add(new CalcButtonData(" x ", 3, 3, 1, pd));
+                add(new CalcButtonData(" X ", 3, 3, 1, pd));
                 add(new CalcButtonData(".", 4, 0, 1, pa));
                 add(new CalcButtonData("0", 4, 1, 1, pa));
                 add(new CalcButtonData("neg", 4, 2, 1, CalcButtonData.ButtonType.NEG, pa));
